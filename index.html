@@ -58,3 +58,15 @@
 
 </body>
 </html>
+
+<!-- Copy to Clipboard Script -->
+<script>
+  const ipText = document.querySelector('.server-ip h3');
+  ipText.addEventListener('click', () => {
+    navigator.clipboard.writeText(ipText.textContent).then(() => {
+      alert('Server IP copied to clipboard!');
+    });
+  });
+</script>
+</body>
+</html>
