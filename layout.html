@@ -1,0 +1,610 @@
+{# ----------------------------------- #}
+{# -------- Made by Coldfire --------- #}
+{# ----- https://coldfiredzn.com ----- #}
+{# ------------- v1.1.4 -------------- #}
+{# ----------------------------------- #}
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1d1d1d">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <title>{{ store.name }} &bull; {{ __(page.title) }}</title>
+    <link rel="shortcut icon" href="{{ store.favicon }}">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        
+        _gaq.push(['_setAccount', 'UA-36735942-3']);
+        _gaq.push(['_trackPageview']);
+        
+        {% if store.googleAnalytics %}
+            _gaq.push(['b._setAccount', '{{ store.googleAnalytics }}']);
+            _gaq.push(['b._trackPageview']);
+        {% endif %}
+        
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>{{ store.css|raw }}</style>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+		
+			:root {
+		        --p-color: {{ config("primary_color") }};
+		    }
+		
+		    /* Primary Color */
+		    .discord-text .st0, .status-text path, .discord-icon .st0, .status-icon path {fill: var(--p-color) !important;}
+			.swal2-icon.swal2-info, .cobalt-update-box .update-icon, .header-theme, .news-title, .top-text, .error-title, .lr-title, .p-icon, .theme-text, .other-btn:after, .other-btn:focus:after, .footer-text-header:after, .widget-header-txt:after, .discord-text .icon:after, .status-text .icon:after, .wiki-page-card span strong, .dropdown-item.d-header, .rules-menu .active span, .rules-menu .active i, .welcome-title, .user-nav-link.active {color: var(--p-color) !important;}
+			a, a:hover, a:focus {color: var(--p-color)}
+			.color-overlay {background: linear-gradient(var(--p-color), #101010);}
+			.swal2-icon.swal2-info, .page-item.active .page-link, .user-nav-link.active, .profile-about-box, .rules-menu-link.active, .btn-success {border-color: var(--p-color) !important;}
+			.swal2-styled.swal2-confirm, .widget-header-txt:after, .discord-text .icon:after, .status-text .icon:after, .nav-link.store-link, .footer-text-header:after, .badge-theme, #toast-container, .progress-bar, .login-overlay, .register-overlay, .vote-tabs .btn.btn-theme.active, .p-color-overlay, .modal-header, .btn-theme, .button-checkbox>.active, .spoiler .spoiler-toggle, .spoiler .spoiler-title, .page-item.active .page-link, .btn.profile-btn.active:after, .cc-window.cc-floating .cc-highlight .cc-btn.cc-allow, .btn-success, .btn-success:hover, .btn-success:focus, .dropdown-item.active {background-color: var(--p-color) !important;}
+			.swal2-styled.swal2-confirm:hover, .spoiler .spoiler-toggle:hover, .spoiler .spoiler-title:hover, .btn-theme:hover {background-color: var(--p-color) !important; filter: brightness(0.85)}
+			.wiki-menu .active.dropdown-toggle::after {
+				border-top-color: var(--p-color) !important;
+				border-bottom-color: var(--p-color) !important;
+			}	
+            @media (max-width: {{ config("ds_breakpoint") }}px) {.status-box-container .text, .discord-box-container .text {display: none}}		
+            .header {background-position: center {{ config("background_vertical_position") }} !important}
+            .header {background: url('{{ config("background_image") }}') no-repeat;}
+
+            {% if config("blur_header_background_image") == "yes" %}
+            .header {filter: blur(3px)}
+            {% endif %}
+
+
+			/* Header */
+			.header:after {height: 227.5px; background: linear-gradient(rgba(0, 0, 0, {{ config("header_background_image_shading") }}), transparent);} .header:before {background: linear-gradient(rgba(0, 0, 0, {{ config("header_background_image_shading") }}), #101010);}
+
+
+			@media (min-width: 769px) {.header {height: 475px}}
+			@media (max-width: 768px) {.header {height: 340px}}
+		    @media (min-width: 769px) {.logo {height: 200px; margin-top: 127.5px}}
+		    @media (max-width: 768px) {.logo {height: 130px; margin-top: 90px}}
+		    .status-text, .discord-text {margin-top: 203.5px}
+		
+		</style>
+
+  </head>
+  <body>
+      
+      <div class="header-top-row">
+        <a class="btn-header-new" href="{{ config("home_url") }}"><i class="fa-solid fa-house-chimney mr-1"></i> Back to home</a>
+        <a class="btn-header-new cart-toggler" href="#"><i class="fa-solid fa-cart-shopping mr-1"></i> Cart <span class="cart-badge">{{ _p(":count", basket.packages|length, {'count' : basket.packages|length}) }}</span></a>
+      </div>
+
+
+
+      <div{% if config("blur_header_background_image") != "yes" %} class='color-overlay'{% endif %}>
+        <div class="header" id="header-pjs" {% if config("color_overlay") == "yes" %}style='opacity: {{ config("color_overlay_opacity") }}; z-index: 1'{% else %}style="opacity: 1; z-index: 4"{% endif %}></div>
+    </div>
+
+
+<div class="logo-ds-flex">
+{% if config("ds_box") == "yes" %}<div class="status-box-container">
+<div class="status-text" onclick="copyToClipboard('#ip')">
+<div class="text">
+<div class="top-text"><span class="server-status">Loading...</span></div>
+<div class="bottom-text">
+<div class="reel-1"><span id="ip">{{ config("mc_server") }}</span></div>
+<div class="reel-1">Click to copy IP</div>
+</div>
+</div>
+<div class="icon">
+<div class="icon-wrapper">
+{% if config("store_type") == "minecraft" %}
+<svg class="creeper" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c-7.6 4.2-12.3 12.3-12.3 20.9V344c0 8.7 4.7 16.7 12.3 20.9s16.8 4.1 24.3-.5l144-88c7.1-4.4 11.5-12.1 11.5-20.5s-4.4-16.1-11.5-20.5l-144-88c-7.4-4.5-16.7-4.7-24.3-.5z"/></svg>
+{% elseif config("store_type") == "fivem" %}
+<svg class="creeper" viewBox="0 0 342 390.5" style="margin-top: 2px; margin-left: 10.5px;"><g transform="matrix(1,0,0,-1,-124.2,606.4)"><path d="m 125.8,215.9 85.1,0 c 1.9,0 7.4,18.3 16.7,54.9 32.3,112.4 50.9,178.1 55.7,197.2 l -54.9,54.1 -1.6,0 C 219.4,499 185.2,397.2 124.2,216.7 l 1.6,-0.8 z m 163.8,275.2 0.8,0 c 1.1,4.5 1.6,7.2 1.6,8 l 0,1.6 c -15.9,16.7 -33.7,34.5 -53.3,53.3 -2.1,-3.2 -3.2,-5.8 -3.2,-8 l 0,-0.8 c 19.9,-20.5 37.9,-38.5 54.1,-54.1 z M 393,429 l 0.8,0 c -10.9,34.5 -17.5,52.2 -19.9,53.3 L 254.6,600.8 c -1.3,0 -4.2,-8.5 -8.7,-25.4 L 393,429 Z m -22.3,65.3 0.8,0 c -24.4,74 -37.4,111.3 -39,112.1 l -73.2,0 0,-0.8 C 286.4,578 323.5,540.9 370.7,494.3 Z m 43.8,-128.1 0.8,0 c -2.7,13 -9,23.1 -19.1,30.2 -31,31.8 -62,62.8 -93,93 l -0.8,0 c 1.9,-10.9 6.1,-19.1 12.7,-24.7 l 99.4,-98.5 z m 50.1,-150.3 1.6,0.8 c -22.8,67.9 -35,102.9 -36.6,105 l -109.8,108.9 0,-0.8 c 4.2,-16.7 24.7,-88 61.2,-213.9 l 83.6,0 z"></path></g></svg>
+{% else %}
+<svg class="creeper" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M508.5 249.8 486.7 236.2c-.2-2-.3-3.9-.6-5.9l18.7-17.5a7.4 7.4 0 0 0 -2.4-12.3l-24-9c-.5-1.9-1.1-3.8-1.7-5.6l15-20.8a7.4 7.4 0 0 0 -4.8-11.5l-25.4-4.2c-.9-1.7-1.8-3.5-2.7-5.2l10.7-23.4a7.4 7.4 0 0 0 -7-10.4l-25.8 .9q-1.8-2.2-3.6-4.4L439 81.8A7.4 7.4 0 0 0 430.2 73L405 78.9q-2.2-1.8-4.4-3.6l.9-25.8a7.4 7.4 0 0 0 -10.4-7L367.7 53.2c-1.7-.9-3.4-1.8-5.2-2.7L358.4 25.1a7.4 7.4 0 0 0 -11.5-4.8L326 35.3c-1.9-.6-3.8-1.1-5.6-1.7l-9-24a7.4 7.4 0 0 0 -12.3-2.4l-17.5 18.7c-2-.2-3.9-.4-5.9-.6L262.3 3.5a7.4 7.4 0 0 0 -12.5 0L236.2 25.3c-2 .2-3.9 .3-5.9 .6L212.9 7.1a7.4 7.4 0 0 0 -12.3 2.4l-9 24c-1.9 .6-3.8 1.1-5.7 1.7l-20.8-15a7.4 7.4 0 0 0 -11.5 4.8l-4.2 25.4c-1.7 .9-3.5 1.8-5.2 2.7L120.9 42.6a7.4 7.4 0 0 0 -10.4 7l.9 25.8c-1.5 1.2-3 2.4-4.4 3.6L81.8 73A7.4 7.4 0 0 0 73 81.8L78.9 107c-1.2 1.5-2.4 2.9-3.6 4.4l-25.8-.9a7.4 7.4 0 0 0 -6.4 3.3 7.4 7.4 0 0 0 -.6 7.1l10.7 23.4c-.9 1.7-1.8 3.4-2.7 5.2L25.1 153.6a7.4 7.4 0 0 0 -4.8 11.5l15 20.8c-.6 1.9-1.1 3.8-1.7 5.7l-24 9a7.4 7.4 0 0 0 -2.4 12.3l18.7 17.5c-.2 2-.4 3.9-.6 5.9L3.5 249.8a7.4 7.4 0 0 0 0 12.5L25.3 275.8c.2 2 .3 3.9 .6 5.9L7.1 299.1a7.4 7.4 0 0 0 2.4 12.3l24 9c.6 1.9 1.1 3.8 1.7 5.7l-15 20.8a7.4 7.4 0 0 0 4.8 11.5l25.4 4.2c.9 1.7 1.8 3.5 2.7 5.1L42.6 391.1a7.4 7.4 0 0 0 .6 7.1 7.1 7.1 0 0 0 6.4 3.3l25.8-.9q1.8 2.2 3.6 4.4L73 430.2A7.4 7.4 0 0 0 81.8 439L107 433.1q2.2 1.8 4.4 3.6l-.9 25.8a7.4 7.4 0 0 0 10.4 7l23.4-10.7c1.7 .9 3.4 1.8 5.1 2.7l4.2 25.4a7.3 7.3 0 0 0 11.5 4.8l20.8-15c1.9 .6 3.8 1.1 5.7 1.7l9 24a7.4 7.4 0 0 0 12.3 2.4l17.5-18.7c2 .2 3.9 .4 5.9 .6l13.5 21.8a7.4 7.4 0 0 0 12.5 0l13.5-21.8c2-.2 3.9-.3 5.9-.6l17.5 18.7a7.4 7.4 0 0 0 12.3-2.4l9-24c1.9-.6 3.8-1.1 5.7-1.7l20.8 15a7.3 7.3 0 0 0 11.5-4.8l4.2-25.4c1.7-.9 3.5-1.8 5.2-2.7l23.4 10.7a7.4 7.4 0 0 0 10.4-7l-.9-25.8q2.2-1.8 4.4-3.6L430.2 439a7.4 7.4 0 0 0 8.8-8.8L433.1 405q1.8-2.2 3.6-4.4l25.8 .9a7.2 7.2 0 0 0 6.4-3.3 7.4 7.4 0 0 0 .6-7.1L458.8 367.7c.9-1.7 1.8-3.4 2.7-5.2l25.4-4.2a7.4 7.4 0 0 0 4.8-11.5l-15-20.8c.6-1.9 1.1-3.8 1.7-5.7l24-9a7.4 7.4 0 0 0 2.4-12.3l-18.7-17.5c.2-2 .4-3.9 .6-5.9l21.8-13.5a7.4 7.4 0 0 0 0-12.5zm-151 129.1A13.9 13.9 0 0 0 341 389.5l-7.6 35.7A187.5 187.5 0 0 1 177 424.4l-7.6-35.7a13.9 13.9 0 0 0 -16.5-10.7l-31.5 6.8a187.4 187.4 0 0 1 -16.3-19.2H258.3c1.7 0 2.9-.3 2.9-1.9V309.6c0-1.6-1.2-1.9-2.9-1.9H213.5l.1-34.4H262c4.4 0 23.7 1.3 29.8 25.9 1.9 7.6 6.2 32.1 9.1 40 2.9 8.8 14.6 26.5 27.1 26.5H407a187.3 187.3 0 0 1 -17.3 20.1zm25.8 34.5A15.2 15.2 0 1 1 368 398.1h.4A15.2 15.2 0 0 1 383.2 413.3zm-225.6-.7a15.2 15.2 0 1 1 -15.3-15.3h.5A15.3 15.3 0 0 1 157.6 412.6zM69.6 234.2l32.8-14.6a13.9 13.9 0 0 0 7.1-18.3L102.7 186h26.6V305.7H75.7A187.7 187.7 0 0 1 69.6 234.2zM58.3 198.1a15.2 15.2 0 0 1 15.2-15.3H74a15.2 15.2 0 1 1 -15.7 15.2zm155.2 24.5 .1-35.3h63.3c3.3 0 23.1 3.8 23.1 18.6 0 12.3-15.2 16.7-27.7 16.7zM399 306.7c-9.8 1.1-20.6-4.1-22-10.1-5.8-32.5-15.4-39.4-30.6-51.4 18.9-12 38.5-29.6 38.5-53.3 0-25.5-17.5-41.6-29.4-49.5-16.8-11-35.3-13.2-40.3-13.2H116.3A187.5 187.5 0 0 1 221.2 70.1l23.5 24.6a13.8 13.8 0 0 0 19.6 .4l26.3-25a187.5 187.5 0 0 1 128.4 91.4l-18 40.6A14 14 0 0 0 408 220.4l34.6 15.3a187.1 187.1 0 0 1 .4 32.5H423.7c-1.9 0-2.7 1.3-2.7 3.1v8.8C421 301 409.3 305.6 399 306.7zM240 60.2A15.2 15.2 0 0 1 255.2 45h.5A15.2 15.2 0 1 1 240 60.2zM436.8 214a15.2 15.2 0 1 1 0-30.5h.4a15.2 15.2 0 0 1 -.4 30.5z"/></svg>
+{% endif %}
+</div>
+</div>
+</div>
+</div>
+{% endif %}
+<div class="logo-container">
+<a id="logo-link" href="/">
+<img class="logo{% if config("animate_logo") == 'yes' %} animated-logo{% endif %}" alt="logo" src='{{ store.logo }}' />
+</a>
+</div>
+{% if config("ds_box") == "yes" %}
+<div class="discord-box-container">
+<a href="https://{{ config("discord_url") }}" target="_blank">
+<div class="discord-text">
+<div class="icon">
+<div class="icon-wrapper">
+<svg class="discord" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 245 240">
+<path class="st0" d="M104.4 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1.1-6.1-4.5-11.1-10.2-11.1zM140.9 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.5-11.1-10.2-11.1z">
+</path>
+<path class="st0" d="M189.5 20h-134C44.2 20 35 29.2 35 40.6v135.2c0 11.4 9.2 20.6 20.5 20.6h113.4l-5.3-18.5 12.8 11.9 12.1 11.2 21.5 19V40.6c0-11.4-9.2-20.6-20.5-20.6zm-38.6 130.6s-3.6-4.3-6.6-8.1c13.1-3.7 18.1-11.9 18.1-11.9-4.1 2.7-8 4.6-11.5 5.9-5 2.1-9.8 3.5-14.5 4.3-9.6 1.8-18.4 1.3-25.9-.1-5.7-1.1-10.6-2.7-14.7-4.3-2.3-.9-4.8-2-7.3-3.4-.3-.2-.6-.3-.9-.5-.2-.1-.3-.2-.4-.3-1.8-1-2.8-1.7-2.8-1.7s4.8 8 17.5 11.8c-3 3.8-6.7 8.3-6.7 8.3-22.1-.7-30.5-15.2-30.5-15.2 0-32.2 14.4-58.3 14.4-58.3 14.4-10.8 28.1-10.5 28.1-10.5l1 1.2c-18 5.2-26.3 13.1-26.3 13.1s2.2-1.2 5.9-2.9c10.7-4.7 19.2-6 22.7-6.3.6-.1 1.1-.2 1.7-.2 6.1-.8 13-1 20.2-.2 9.5 1.1 19.7 3.9 30.1 9.6 0 0-7.9-7.5-24.9-12.7l1.4-1.6s13.7-.3 28.1 10.5c0 0 14.4 26.1 14.4 58.3 0 0-8.5 14.5-30.6 15.2z">
+</path>
+</svg>
+</div>
+</div>
+<div class="text">
+<div class="top-text"><span class="discord-status">Loading...</span></div>
+<div class="bottom-text">
+<div class="reel-1">{{ config("discord_url") }}</div>
+<div class="reel-1">Click to join</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+{% endif %}
+</div> 
+      
+
+
+<div class="cart-menu">
+    <div class="cart-header">
+        <div class="cart-header-text theme-text">Cart ({{ _p(":count", basket.packages|length, {'count' : basket.packages|length}) }})</div>
+        <div class="currency">
+            <button type="button" class="btn btn-secondary ml-4 dropdown-toggle" data-toggle="dropdown">
+              {{ basket.currency }}
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              {% for currency in store.currencies %}
+                  {% if currency.code in [store.currency, "AUD", "BRL", "CAD", "DKK", "EUR", "NOK", "NZD", "GBP", "SEK", "USD", "PLN"] %}
+                      <a class="dropdown-item{% if basket.currency == currency.code %} active {% endif %}" href="?currency={{ currency.code }}">{{ currency.code }}</a>
+                  {% endif %}
+              {% endfor %}
+            </ul>
+        </div>
+        <div id="cart-close" class="cart-close btn btn-secondary ml-2"><i class="fa-solid fa-xmark"></i></div>
+    </div>
+    <div class="cart-body">
+
+    {% if basket.packages|length > 0 %}
+
+        {% for package in basket.packages %}
+        <div class="card mb-3">
+            <div class="card-body d-flex">
+                <div class="name flex-grow-1">{{ package.name[:25] }}</div>
+                <div class="price ml-3">{{ package.price|money }} <small>{{ basket.currency }}</small></div>
+                <div class="remove ml-3"><a class="grey-link" href="/checkout/packages/remove/{{ package.id }}"><span class="fa fa-times"></span></a></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="cart-footer d-flex">
+      <div class="total flex-grow-1"><b>{{ __("Total") }}:</b> {{ basket.price|money }} <small>{{ basket.currency }}</small></div>
+      <a class="btn btn-theme cart-checkout" href="/checkout/basket">{{ __("Checkout") }}</a>
+    </div>
+    {% else %}
+        Your cart is empy! Continue shopping and add some items before checkout.
+    </div>
+    {% endif %}
+</div>
+{# cart menu #}
+<div class="overlay"></div>
+
+
+
+
+    <div class="container top-container mb-4">
+    
+    <div class="row">
+
+<div class="col-lg-3">
+
+    <div class="username-box d-flex">
+        <div class="skin">
+            {% if config("store_type") == "minecraft" %}
+            {% if basket.username %} 
+            <img src="https://mc-heads.net/body/{{ basket.ign }}/right" alt="{{ basket.ign }}" />
+            {% else %}
+            <img src='https://mc-heads.net/body/{{ config("sidebar_skin") }}/right' alt="Guest" />
+            {% endif %}
+            {% elseif config("store_type") == "fivem" %}
+            <img src="https://i.ibb.co/S3Rfv2g/right-1.png" alt="Guest">
+            {% else %}
+            <img style="margin-top: 0.8rem" src="https://i.imgur.com/Z7UJvA6.png" alt="Guest">       
+            {% endif %}
+        </div>
+        <div class="text flex-grow-1">
+            <div>{% if basket.username %} 
+            {{ basket.ign }}
+            {% else %}
+            Guest
+            {% endif %}</div>
+            {% if basket.username %} 
+                <a href="/checkout/logout" class="btn btn-secondary btn-log">{{ __("Logout") }}</a> {% else %} <a href="/login" class="btn btn-sm btn-secondary btn-log">{{ __("Login") }}</a>
+            {% endif %}
+        </div>
+    </div>
+
+       
+
+      <div class="user-nav">
+        <a class="{% if page.category == "index" %}active {% endif %}user-nav-link" href="/">
+          {{ __("Home") }}
+        </a>
+        {% for category in store.categories %}
+                  {% if category.subcategories|length > 0 %}
+                      <div class="dropdown">
+                        <a class="user-nav-link {% if category.active %}active{% endif %} dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            {{ category.name }}
+                        </a>
+                        <div class="dropdown-menu ml-3" aria-labelledby="dropdownMenuButton">
+                            {% for subcategory in category.subcategories %}
+                            <a class="dropdown-item" href="/category/{{ subcategory.id }}">{{ subcategory.name }}</a> {% endfor %}
+                        </div>
+                    </div>
+                  {% else %}
+                    <a class="{% if category.active %}active {% endif %}user-nav-link" href="/category/{{ category.id }}">{{ category.name }}</a>
+                  {% endif %}
+                {% endfor %}
+                {% for page in store.pages %}
+                    <a class="{% if page.active %}active{% endif %} user-nav-link" href="/{{ page.slug }}">{{ page.title }}</a>
+                {% endfor %}                
+                {% if basket.packages|length > 0 %} 
+                    <a class="btn btn-theme d-block mt-3 ml-3 mr-3" href="/checkout/basket">{{ __("Checkout") }}</a>
+                {% endif %}
+      </div>
+
+      {{ modules|raw }}
+      {{ modules.featuredpackage }}
+
+      
+      </div>
+      <div class="col-lg-9">
+      
+      
+        {% if page.message.display %}
+            <div class="alert alert-info alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ page.message.text }}
+            </div>
+        {% endif %}  
+
+      {% block content %}{% endblock %}
+       
+    </div></div></div>
+
+      
+      <div class="footer small-footer">
+    <div class="small-section">
+        <div class="container d-flex">
+            <div class="footer-copyright flex-grow-1">
+                <span class="copyright-txt">© {{ 'now'|date('Y') }} {{ store.name }}</span>
+            </div>
+            <div class="right">
+                {% if store.useCheckout %}
+                    <a class="footer-link terms-link" href="/terms/checkout">Terms</a>
+                    <a class="footer-link privacy-policy-link" href="/terms/privacy">Privacy</a>
+                    <a class="footer-link privacy-policy-link" href="/terms/impressum">Impressum</a>
+                {% endif %}     
+                
+                <div class="d-inline-block dropup">
+  <a href="#" class="footer-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    {{ __("Language") }}
+  </a>
+  <div class="dropdown-menu">
+    {% for locale, name in store.locales %}
+                      <a class="dropdown-item" href="?locale={{ locale }}">{{ name }}</a>
+                  {% endfor %}
+  </div>
+</div>
+                
+            
+            </div>
+            <div class="end">
+                <a class="footer-link" href="https://coldfiredzn.com" rel="noopener" target="_blank">Designed by Coldfire</a>
+            </div>
+        </div>
+    </div>
+</div>
+      
+      
+      
+    
+    <div class="modal" id="popup-modal" tabindex="-1" role="dialog"></div>
+    
+    {% if page.category == "checkout" %}
+      <script src="https://js.stripe.com/v2/"></script>
+    {% endif %}
+
+    <script>
+        var particles = "{{ config("particles") }}";
+        var discord_server = "{{ config("discord_id") }}";
+        var mc_server = "{{ config("mc_server") }}";
+        var ds_box = "{{ config("ds_box") }}";
+        var ds_breakpoint = "{{ config("ds_breakpoint") }}";
+        var users_online = "users online";
+        var user_online = "user online";
+        var players_online = "players online";
+        var player_online = "player online";
+        var server_offline = "Server is offline";
+    </script> 
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.2.0/dist/sweetalert2.all.min.js" integrity="sha256-tGZXBB9uK3MK1zLsI8b/1gZYQcBl8TMTi52kA2RmEKc=" crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@1.39.3/tsparticles.min.js" integrity="sha256-CGTXk49NPei0eRo1PL2NVebBLfmfE7PQlx0ktUIpM+o=" crossorigin="anonymous"></script>
+
+    <script src="/templates/209/js/skin.min.js"></script>
+    <script src="/templates/209/js/site.js"></script>
+    <script>
+function copyToClipboard(element) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($(element).text()).select();
+    document.execCommand("copy");
+    $temp.remove();
+    Swal.fire({ title: "IP Copied", text: "Now go join the server!", icon: "success", confirmButtonText: "Close" });
+}
+
+$('.cart-toggler').click(function () {
+    $('.cart-menu').addClass("active");
+    $('.overlay').addClass("active");
+});
+$('#cart-close').click(function () {
+    $('.cart-menu').removeClass("active");
+    $('.overlay').removeClass("active");
+});
+
+
+    </script>
+    <script>
+        
+        if (ds_box == "yes") {
+
+if (window.screen.width >= ds_breakpoint) {
+
+    $(window).on("load", function () {
+
+
+        {% if config("store_type") == "minecraft" %}
+        let serverStatusIp = mc_server;
+        $.ajax({
+            url: "https://api.mcsrvstat.us/2/" + serverStatusIp,
+            success: function (data) {
+                if (data.online) {
+                    let online = data.online;
+                    let playerCurrentCount = data.players.online;
+                    updateStatus(online, playerCurrentCount);
+                } else {
+                    let online = null;
+                    updateStatus(online);
+                }
+            },
+            error: function () {
+                $.ajax({
+                    url: "https://mcapi.us/server/status?ip=" + serverStatusIp,
+                    success: function (data) {
+                        if (data.online) {
+                            let online = data.online;
+                            let playerCurrentCount = data.players.now;
+                            updateStatus(online, playerCurrentCount);
+                        } else {
+                            let online = null;
+                            updateStatus(online);
+                        }
+                    },
+                });
+            },
+            timeout: 300000,
+        });
+        
+        {% else %}
+        
+        let statusStatusDiv = $(".server-status");
+        statusStatusDiv.text("Play now!");
+        
+        
+        {% endif %}
+
+        function updateStatus(online, current) {
+            let statusStatusDiv = $(".server-status");
+            if (online) {
+                statusStatusDiv.empty();
+                if ((current > 1) || (current < 1)) {
+                    statusStatusDiv.html("<span class='status-number'>" + current + "</span> " + players_online);
+                } else {
+                    statusStatusDiv.html("<span class='status-number'>" + current + "</span> " + player_online);
+                }
+            } else {
+                statusStatusDiv.empty();
+                statusStatusDiv.text(server_offline);
+            }
+        }
+
+        let discordStatusID = discord_server;
+        $.ajax({
+            url: "https://discord.com/api/guilds/" + discordStatusID + "/embed.json",
+            success: function (data) {
+                let presence_count = data.presence_count;
+                updateDiscordStatus(presence_count);
+            },
+            error: function () {},
+            timeout: 300000,
+        });
+
+        function updateDiscordStatus(presence_count) {
+            let discordStatusDiv = $(".discord-status");
+            discordStatusDiv.empty();
+            if ((presence_count > 1) || (presence_count < 1)) {
+                discordStatusDiv.html("<span class='status-number'>" + presence_count + "</span> " + users_online);
+            } else {
+                discordStatusDiv.html("<span class='status-number'>" + presence_count + "</span> " + user_online);
+            }
+        }
+
+    });
+
+}
+
+}
+
+if (particles == "yes") {
+    $(window).on("load", function () {
+        tsParticles.load("header-pjs", {
+    "fullScreen": {
+        "enable": false
+    },
+    "particles": {
+        "number": {
+            "value": 30,
+            "density": {
+                "enable": true,
+                "valueArea": 800
+            }
+        },
+        "color": {
+            "value": "#ffffff"
+        },
+        "shape": {
+            "type": "circle",
+            "stroke": {
+                "width": 0,
+                "color": "#000000"
+            },
+            "polygon": {
+                "nbSides": 5
+            },
+            "image": {
+                "src": "img/github.svg",
+                "width": 100,
+                "height": 100
+            }
+        },
+        "opacity": {
+            "value": 0.9,
+            "random": false,
+            "anim": {
+                "enable": false,
+                "speed": 1,
+                "opacityMin": 0.1,
+                "sync": false
+            }
+        },
+        "size": {
+            "value": 4,
+            "random": true,
+            "anim": {
+                "enable": false,
+                "speed": 40,
+                "sizeMin": 0.1,
+                "sync": false
+            }
+        },
+        "lineLinked": {
+            "enable": false,
+            "distance": 150,
+            "color": "#ffffff",
+            "opacity": 0.4,
+            "width": 1
+        },
+        "move": {
+            "enable": true,
+            "speed": 2,
+            "direction": "top",
+            "random": false,
+            "straight": false,
+            "outMode": "out",
+            "bounce": false,
+            "attract": {
+                "enable": false,
+                "rotateX": 600,
+                "rotateY": 1200
+            }
+        }
+    },
+    "interactivity": {
+        "detectOn": "canvas",
+        "events": {
+            "onhover": {
+                "enable": false,
+                "mode": "grab"
+            },
+            "onclick": {
+                "enable": false,
+                "mode": "push"
+            },
+            "resize": true
+        },
+        "modes": {
+            "grab": {
+                "distance": 140,
+                "lineLinked": {
+                    "opacity": 1
+                }
+            },
+            "bubble": {
+                "distance": 400,
+                "size": 40,
+                "duration": 2,
+                "opacity": 8,
+                "speed": 3
+            },
+            "repulse": {
+                "distance": 200,
+                "duration": 0.4
+            },
+            "push": {
+                "particlesNb": 4
+            },
+            "remove": {
+                "particlesNb": 2
+            }
+        }
+    },
+    "retinaDetect": true
+});
+    });
+}
+    </script>
+
+     <script>
+            jQuery(function(){
+                var countdowns = $(".countdown-to");
+                countdowns.each(function(){
+                   setInterval(function(ele) {
+                       timeLeft = parseInt(ele.attr("data-countdown"));
+                       if (timeLeft == 0) {
+                           ele.html("Time Expired!");
+                       } else {
+                       timeLeft--;
+                       ele.attr("data-countdown", timeLeft);
+                      var days = Math.floor(timeLeft / (60 * 60 * 24));
+                      var hours = Math.floor((timeLeft % (60 * 60 * 24)) / (60 * 60));
+                      var minutes = Math.floor((timeLeft % (60 * 60)) / (60));
+                      var seconds = Math.floor((timeLeft % 60));
+                      ele.html(days + "d " + hours + "h " + minutes + "m " + seconds + "s");
+                       }
+                   }, 1000, jQuery(this));
+                });
+            });
+
+        </script>
+  </body>
+</html>
