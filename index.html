@@ -3,58 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Server Name</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>My Server Website</title>
+
+  <!-- Font Awesome for Discord Icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- Custom CSS for styling -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #282c34;
+      color: white;
+    }
+
+    /* Styling for Discord Icon */
+    .discord-link {
+      font-size: 24px;
+      color: #7289DA;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .discord-link i {
+      margin-right: 8px;
+      font-size: 36px;
+    }
+
+    /* Styling for the server logo */
+    .logo-container {
+      margin-top: 40px;
+    }
+
+    .server-logo {
+      width: 200px;
+      height: auto;
+    }
+
+    /* Styling for the discord online member count */
+    #discord-online {
+      margin-top: 20px;
+      font-size: 20px;
+      color: lightgreen;
+    }
+
+    .content {
+      margin-top: 50px;
+    }
+
+    /* Add some styling to the categories */
+    .category {
+      font-size: 20px;
+      margin: 10px;
+    }
+  </style>
 </head>
 <body>
-  <header class="header">
-    <div class="background">
-      <!-- Place animated background here -->
-    </div>
-    <div class="content">
-      <!-- Server logo in the middle -->
-      <img src="images/logo.png" alt="Server Logo" class="logo">
-      
-      <!-- Server IP and Discord Link -->
-      <div class="info">
-        <div class="server-ip">
-          <h3>PLAY.YOURSERVER.COM</h3>
-          <p>Click to Copy</p>
-        </div>
-        <div class="discord">
-          <a href="https://discord.gg/your-invite" target="_blank">
-            <img src="discord-icon.png" alt="Discord Icon">
-            <span>Join Discord</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </header>
 
-  <!-- Navigation Section -->
-  <nav class="navigation">
-    <ul>
-      <li>
-        <a href="index.html"><img src="home-icon.png" alt="Home Icon">Home</a>
-      </li>
-      <li>
-        <a href="rules.html"><img src="rules-icon.png" alt="Rules Icon">Rules</a>
-      </li>
-      <li>
-        <a href="vote.html"><img src="vote-icon.png" alt="Vote Icon">Vote</a>
-      </li>
-      <li>
-        <a href="staff.html"><img src="staff-icon.png" alt="Staff Icon">Staff</a>
-      </li>
-    </ul>
-  </nav>
-
-  <!-- Store Button -->
-  <div class="store-button">
-    <a href="https://yourstorelink.com" class="button">Visit our Store</a>
+  <!-- Your Server Logo in the Middle -->
+  <div class="logo-container">
+    <img src="images/logo.png" alt="My Server Logo" class="server-logo">
   </div>
 
-  <!-- Footer or additional content here -->
+  <!-- Discord Link with Icon and Online Members Count -->
+  <div class="content">
+    <a href="https://dsc.gg/pridemc" class="discord-link" target="_blank">
+      <i class="fab fa-discord"></i> Join our Discord
+    </a>
+
+    <div id="discord-online">Loading Discord Info...</div>
+  </div>
+
+  <!-- Rest of your website (Home, Rules, etc.) -->
+  <div class="categories">
+    <div class="category">Home</div>
+    <div class="category">Rules</div>
+    <div class="category">Vote</div>
+    <div class="category">Staff</div>
+  </div>
+
+  <!-- Fetch Discord Info Script -->
+  <script>
+    const serverID = '1166291675333808159';  // Replace this with your actual server ID
+    const apiUrl = `https://discordapp.com/api/guilds/${serverID}/embed.json`;
+
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        const onlineMembers = data.presence_count;  // This gets the online members
+        document.getElementById('discord-online').textContent = `Online Members: ${onlineMembers}`;
+      })
+      .catch(error => console.error('Error fetching Discord data:', error));
+  </script>
 
 </body>
 </html>
